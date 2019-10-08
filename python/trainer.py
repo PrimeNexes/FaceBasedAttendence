@@ -6,10 +6,14 @@ from embedding import emb
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
+from PIL import Image
+from matplotlib import pyplot
+from numpy import savez_compressed
+from numpy import asarray
+from mtcnn.mtcnn import MTCNN
 
 import sys
-
-n_classes=5
+n_classes=60
 
 e=emb()
 arc=DenseArchs(n_classes)
@@ -22,12 +26,43 @@ learning_rate=0.01
 epochs=27
 batch_size=32
 
-people=os.listdir('python/people')
+
+def extract_face(filename, required_size=(160, 160)):
+	# load image from file
+	image = Image.open(filename)
+	# convert to RGB, if needed
+	image = image.convert('RGB')
+	# convert to array
+	pixels = asarray(image)
+	# create the detector, using default weights
+	detector = MTCNN()
+	# detect faces in the image
+	results = detector.detect_faces(pixels)
+	# extract the bounding box from the first face
+	x1, y1, width, height = results[0]['box']
+	# bug fix
+	x1, y1 = abs(x1), abs(y1)
+	x2, y2 = x1 + width, y1 + height
+	# extract the face
+	face = pixels[y1:y2, x1:x2]
+	# resize pixels to the model size
+	image = Image.fromarray(face)
+	image = image.resize(required_size)
+	face_array = asarray(image)
+	return face_array
+
+year = sys.argv[1]
+className = sys.argv[2]
+
+# year = '2020'
+# className = 'TYMCA'
+people=os.listdir('python/dataset/'+year+'/'+className)
 
 for x in people:
-    for i in os.listdir('python/people/'+x):
-        img=cv2.imread('python/people'+'/'+x+'/'+i,1)
-        img=cv2.resize(img,(160,160))
+    print(x)
+    for i in os.listdir('python/dataset/'+year+'/'+className+'/'+x):
+        img=extract_face('python/dataset/'+year+'/'+className+'/'+x+'/'+i)
+        # img=cv2.resize(img,(160,160))
         img=img.astype('float')/255.0
         img=np.expand_dims(img,axis=0)
         embs=e.calculate(img)
@@ -45,5 +80,5 @@ y_test=to_categorical(y_test,num_classes=n_classes)
 o=Adam(lr=learning_rate,decay=learning_rate/epochs)
 face_model.compile(optimizer=o,loss='categorical_crossentropy')
 face_model.fit(x_train,y_train,batch_size=batch_size,epochs=epochs,shuffle='true',validation_data=(x_test,y_test))
-face_model.save('face_reco2.MODEL')
+face_model.save('python/face_reco2.MODEL')
 print(x_data.shape,y_data.shape)

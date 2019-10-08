@@ -4,7 +4,6 @@ from keras.models import Sequential
 
 class DenseArchs:
     def __init__(self,classes):
-        print('training initiated')
         self.model=Sequential()
         self.classes=classes
     def arch(self):
