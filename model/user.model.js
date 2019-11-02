@@ -2,27 +2,33 @@
 // userModel.js
 var mongoose = require('mongoose');
 // Setup schema
-var userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    phoneNumber: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    registed_date: {
-        type: Date,
-        default: Date.now
-    }
-});
-// Export User model
-var User = module.exports = mongoose.model('User', userSchema);
 
-module.exports.get = function (find, limit) {
-    return User.find(find).limit(limit);
+var dataSchema = new mongoose.Schema({
+        uid: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+    className: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    }});
+
+// Export User model
+var User = module.exports = mongoose.model('User', dataSchema);
+
+module.exports.get = async function (find) {
+    const give = [];
+    const data = await User.find(find);
+    data.forEach((snapshot)=>{
+        give.push(snapshot.toJSON().name);
+    })
+    return give;//Display the comments returned by MongoDB, if any were found. Executes after the query is complete.
 }

@@ -5,12 +5,22 @@ const Recognise = require('../model/recognise.model');
 let PythonShell = require('python-shell')
 // Handle index actions
 exports.recognise = function (req, res) {
-    let pyshell =PythonShell.PythonShell.run('python/recognizer.py',null,function (err, results) {
+  
+  const User = require('../model/user.model');
+  let year = req.body.year;
+  let className = req.body.className;
+  User.get({className:req.body.className,year:req.body.year}).then(function(snapshot){
+    let argument = [year,className,snapshot];
+    let options = {
+      args: argument,
+    };
+    PythonShell.PythonShell.run('python/recognizer.py',options,function (err, results) {
         if (err) throw err;
-      });
-    pyshell.on('message', function (message) {
-        res.json({results:message})
-      });
+        res.json({results:results})
+    });
+  })
+
+
 };
 
 

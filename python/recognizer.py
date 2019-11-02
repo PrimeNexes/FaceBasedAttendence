@@ -12,12 +12,16 @@ from mtcnn.mtcnn import MTCNN
 import sys
 #from retreive_pymongo_data import database
 
+year = sys.argv[1]
+className = sys.argv[2]
 label=None
-people={0:"Sheldon",1:"Ben",2:"Elton",3:"Jerry",4:"Madona"}
+#people={0:"Sheldon",1:"Ben",2:"Elton",3:"Jerry",4:"Madona"}
+people= sys.argv[3].split(',')
 abhi=None
 e=emb()
 fd=face()
-model=load_model('python/face_reco2.MODEL',compile=False)
+model=load_model('python/model/'+year+'_'+className+'_face_reco.MODEL',compile=False)
+
 
 
 def extract_face(filename, required_size=(160, 160)):

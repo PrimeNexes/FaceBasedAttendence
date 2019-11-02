@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Connect to Mongoose and set connection variable
-//mongoose.connect('mongodb://localhost/OIP',{ useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/SPIT',{ useNewUrlParser: true });
 
 
 // Setup server port

@@ -12,20 +12,18 @@ router.get('/', function (req, res) {
 // Import contact controller
 var recogniseController = require('../controller/recognise.controller');
 var trainController = require('../controller/train.controller');
+var userController = require('../controller/user.controller');
 // Contact routes
 
 router.route('/recognise')
-    .get(recogniseController.recognise);
+    .post(recogniseController.recognise);
 
 
 router.route('/train')
     .post(trainController.train);
 
 
-// router.route('/register/:contact_id')
-//     .get(contactController.view)
-//     .patch(contactController.update)
-//     .put(contactController.update)
-//     .delete(contactController.delete);
+router.route('/register')
+    .post(userController.register);
 // Export API routes
 module.exports = router;
