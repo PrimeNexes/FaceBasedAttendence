@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
 var recogniseController = require('../controller/recognise.controller');
 var trainController = require('../controller/train.controller');
 var userController = require('../controller/user.controller');
+var uploadController = require('../controller/upload.controller');
 // Contact routes
 
 router.route('/recognise')
@@ -25,5 +26,7 @@ router.route('/train')
 
 router.route('/register')
     .post(userController.register);
+
+router.route('/upload').post(uploadController.upload)
 // Export API routes
 module.exports = router;

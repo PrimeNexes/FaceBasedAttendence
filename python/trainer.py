@@ -59,7 +59,6 @@ className = sys.argv[2]
 people=os.listdir('python/dataset/'+year+'/'+className)
 
 for x in people:
-    print(x)
     for i in os.listdir('python/dataset/'+year+'/'+className+'/'+x):
         img=extract_face('python/dataset/'+year+'/'+className+'/'+x+'/'+i)
         # img=cv2.resize(img,(160,160))
