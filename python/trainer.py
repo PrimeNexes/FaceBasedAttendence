@@ -61,12 +61,13 @@ people=os.listdir('python/dataset/'+year+'/'+className)
 for x in people:
     for i in os.listdir('python/dataset/'+year+'/'+className+'/'+x):
         img=extract_face('python/dataset/'+year+'/'+className+'/'+x+'/'+i)
-        # img=cv2.resize(img,(160,160))
+        #img=cv2.resize(img,(160,160))
         img=img.astype('float')/255.0
         img=np.expand_dims(img,axis=0)
         embs=e.calculate(img)
         x_data.append(embs)
         y_data.append(int(x[-1]))
+
 
 
 x_data=np.array(x_data,dtype='float')
@@ -80,4 +81,4 @@ o=Adam(lr=learning_rate,decay=learning_rate/epochs)
 face_model.compile(optimizer=o,loss='categorical_crossentropy')
 face_model.fit(x_train,y_train,batch_size=batch_size,epochs=epochs,shuffle='true',validation_data=(x_test,y_test))
 face_model.save('python/model/'+year+'_'+className+'_face_reco.MODEL')
-print(x_data.shape,y_data.shape)
+print('Done')

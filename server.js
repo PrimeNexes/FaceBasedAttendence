@@ -1,12 +1,20 @@
 // @ts-check
 // Import express
+
 let express = require('express');
 // Import Body parser
 let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
+
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const morgan = require('morgan');
+const _ = require('lodash');
+var fs = require('fs');
 // Initialize the app
 let app = express();
+
 
 // Import routes
 let routes = require("./routes/routes")
@@ -38,6 +46,94 @@ app.get('/', (req, res) => res.send('Hello World with Express'));
 // Use Api routes in the App
 app.use('/api', routes);
      
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+//add other middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
+
+
+app.post('/upload-dataset', async (req, res) => {
+    try {
+        if(!req.files) {
+            res.send({
+                status: false,
+                message: 'No file uploaded'
+            });
+        } else {
+            let data = []; 
+    
+            //loop all files
+            _.forEach(_.keysIn(req.files.photos), (key) => {
+                let photo = req.files.photos[key];
+                let str =  photo.name.split('.');
+                const dir = './python/dataset/'+str[0]+'/'+str[1]+'/'+str[2]+'/'+str[3]+'.'+str[4];
+
+                //move photo to uploads directory
+                photo.mv(dir);
+
+                //push file details
+                data.push({
+                    name: photo.name,
+                    mimetype: photo.mimetype,
+                    size: photo.size
+                });
+            });
+    
+            //return response
+            res.send({
+                status: true,
+                message: 'Files are uploaded',
+                data: data
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+app.post('/upload-recognise', async (req, res) => {
+    try {
+        if(!req.files) {
+            res.send({
+                status: false,
+                message: 'No file uploaded'
+            });
+        } else {
+            let data = []; 
+    
+            //loop all files
+            _.forEach(_.keysIn(req.files.photos), (key) => {
+                let photo = req.files.photos[key];
+                let str =  photo.name.split('.');
+                const dir = './python/recogCache/'+str[0]+'/'+str[1]+'/'+str[2]+'/'+str[3]+'.'+str[4];
+
+                //move photo to uploads directory
+                photo.mv(dir);
+
+                //push file details
+                data.push({
+                    name: photo.name,
+                    mimetype: photo.mimetype,
+                    size: photo.size
+                });
+            });
+    
+            //return response
+            res.send({
+                status: true,
+                message: 'Files are uploaded',
+                data: data
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 // Launch app to listen to specified port
 app.listen(port, function () {
     console.log("Running RestHub on port " + port);

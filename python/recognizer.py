@@ -8,6 +8,7 @@ from matplotlib import pyplot
 from numpy import savez_compressed
 from numpy import asarray
 from mtcnn.mtcnn import MTCNN
+import os
 
 import sys
 #from retreive_pymongo_data import database
@@ -49,19 +50,21 @@ def extract_face(filename, required_size=(160, 160)):
 	return face_array
 
 def test():
-    run=extract_face('python/tempReg/1.jpg')
-    # run=cv2.resize(run,(160,160))
-    #run=np.rollaxis(run,2,0)
-    run=run.astype('float')/255.0
-    run=np.expand_dims(run,axis=0)
-    run=e.calculate(run)
-    run=np.expand_dims(run,axis=0)
-    prediction = model.predict(run)[0]
-    result = int(np.argmax(prediction))
-    if(np.max(prediction)>.95):
-        label=people[result]
-    else:
-        label = 'unknown'
-    print(label+ ': ', np.max(prediction))
+		recog=os.listdir('python/recogCache/'+year+'/'+className)
+		for x in recog:
+			run=extract_face('python/recogCache/'+year+'/'+className+'/'+x)
+			# run=cv2.resize(run,(160,160))
+			#run=np.rollaxis(run,2,0)
+			run=run.astype('float')/255.0
+			run=np.expand_dims(run,axis=0)
+			run=e.calculate(run)
+			run=np.expand_dims(run,axis=0)
+			prediction = model.predict(run)[0]
+			result = int(np.argmax(prediction))
+			if(np.max(prediction)>.95):
+				label=people[result]
+			else:
+				label = 'unknown'
+			print(label+ ': ', np.max(prediction))
 
 test()
