@@ -26,7 +26,8 @@ var User = module.exports = mongoose.model('User', dataSchema);
 
 module.exports.get = async function (find) {
     const give = [];
-    const data = await User.find(find);
+    give.push('none');
+    const data = await User.find(find).sort({"uid":0});
     data.forEach((snapshot)=>{
         give.push(snapshot.toJSON().name);
     })
