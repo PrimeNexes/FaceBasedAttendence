@@ -1,25 +1,52 @@
 <html>
     <body>
-		<form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/api/upload" method="post"> 
-		   <input type="file" name="myfile" /><br/><br/>  
+	Upload
+		<form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/upload-recognise" method="post"> 
+		   <input type="file" name="photos" multiple/><br/><br/>  
 		   <input type="submit" value="Upload Image" name="submit"><br/><br/>  
 		   <span id="status"></span>  
-		</form>  
+		</form>
+		Delete
+		<form action="http://localhost:8080/delete" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		recognise
         <form action="http://localhost:8080/api/recognise" method="post">
             Class Name: <input type="text" name="className"><br>
             Year: <input type="text" name="year"><br>
             <input type="submit" value="Submit">
           </form>
+		  Train
 		          <form action="http://localhost:8080/api/train" method="post">
             Class Name: <input type="text" name="className"><br>
             Year: <input type="text" name="year"><br>
             <input type="submit" value="Submit">
           </form>
-		          <form action="http://localhost:8080/api/register" method="post">
+		  Get Users
+		 <form action="http://localhost:8080/api/getuser" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Register
+		  <form action="http://localhost:8080/api/register" method="post">
 			Name: <input type="text" name="name"><br>
 			Uid: <input type="text" name="uid"><br>
             Class Name: <input type="text" name="className"><br>
             Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Attendence
+		  	<form action="http://localhost:8080/api/putAttendence" method="post">
+			Subject: <input type="text" name="uid"><br>
+			Professor: <input type="text" name="professor"><br>
+			Year: <input type="text" name="year"><br>
+            Class Name: <input type="text" name="className"><br>
+			Name: <input type="text" name="name"><br>
+			Attendence: <input type="text" name="attendence"><br>
+            
             <input type="submit" value="Submit">
           </form>
     </body>

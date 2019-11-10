@@ -1,11 +1,14 @@
 // @ts-check
-// userModel.js
 var mongoose = require('mongoose');
-// Setup schema
+
 
 var dataSchema = new mongoose.Schema({
-        uid: {
-            type: Number,
+        subject: {
+            type: String,
+            required: true
+        },
+        professor: {
+            type: String,
             required: true
         },
         name: {
@@ -16,19 +19,28 @@ var dataSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    attendence: {
+        type: Boolean,
+        required: true
+    },
     year: {
         type: Number,
         required: true
-    }});
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
+});
 
 // Export User model
-var User = module.exports = mongoose.model('User', dataSchema);
+var Attendence = module.exports = mongoose.model('Attendence', dataSchema);
 
 module.exports.get = async function (find) {
     console.log(find);
     const give = [];
     give.push('none');
-    const data = await User.find(find).sort({"uid":0});
+    const data = await Attendence.find(find).sort({"uid":0});
     data.forEach((snapshot)=>{
         give.push(snapshot.toJSON().name);
     })

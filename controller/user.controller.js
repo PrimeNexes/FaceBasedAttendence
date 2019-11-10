@@ -3,9 +3,12 @@
 // Import contact model
 const User = require('../model/user.model');
 // Handle index actions
-exports.login = function (req, res) {
-    let user = User.get({className:req.body.className,year:req.body.year});
-    console.log(user);
+exports.getUsers = function (req, res) {
+    User.get({className:req.body.className,year:req.body.year}).then((snapshot)=>{
+        snapshot.shift();
+        res.json(snapshot);
+    });
+    
 };
 // Handle create contact actions
 exports.register = function (req, res) {

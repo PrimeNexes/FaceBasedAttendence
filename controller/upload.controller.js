@@ -37,3 +37,7 @@ exports.upload= function (req, res) {
     });  
 
 };
+
+exports.delete= function (req, res) {
+
+}
