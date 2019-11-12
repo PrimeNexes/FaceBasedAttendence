@@ -60,9 +60,9 @@ app.use(morgan('dev'));
 app.post('/delete', async (req, res) => {
     let className = req.body.className;
     let year = req.body.year;
-    await fs.unlink('./recogCache/'+year+'/'+className, (err) => {
-        if (err) {res.json(err);}else{
-        res.json('successfully deleted /'+year+'/'+className);}
+    await fs.unlink('./python/recogCache/'+year+'/'+className+'/', (err) => {
+        if (err) throw err;
+        res.json('successfully deleted /'+year+'/'+className+'/');
       });
 });
 
