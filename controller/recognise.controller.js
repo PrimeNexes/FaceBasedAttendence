@@ -15,10 +15,11 @@ exports.recognise = function (req, res) {
     };
     console.log("Begin Recognition");
     PythonShell.PythonShell.run('python/recognizer.py',options,function (err, results) {
-        if (err) res.json(err);
+        if (err) throw err;
         res.json({results:results});
+        console.log("Recognition Ended");
     });
-    console.log("Recognition Ended");
+    
   })
 
 

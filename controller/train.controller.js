@@ -15,8 +15,8 @@ exports.train= function (req, res) {
     };
     console.log("Begin Training");
     let pyshell =PythonShell.PythonShell.run('python/trainer.py',options,function (err, results) {
-        if (err) res.json(err);
+        if (err) throw err;
         res.json({results:results});
+        console.log("Training Ended");
     });
-    console.log("Training Ended");
 };
