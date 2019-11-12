@@ -34,7 +34,10 @@ def test():
 			prediction = model.predict(run)[0]
 			result = int(np.argmax(prediction))
 			if(np.max(prediction)>.80):
-				label = people[result]
+				try:
+				    label = people[result]
+				except IndexError:
+					label = 'unknown'
 			else:
 				label = 'unknown'
 			print(label+ ': ', np.max(prediction))

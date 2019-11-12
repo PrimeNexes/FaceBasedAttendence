@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
 var recogniseController = require('../controller/recognise.controller');
 var trainController = require('../controller/train.controller');
 var userController = require('../controller/user.controller');
-var uploadController = require('../controller/upload.controller');
 var attendenceController = require('../controller/attendence.controller');
 var teacherController = require('../controller/teacher.controller');
 // Contact routes
@@ -31,9 +30,6 @@ router.route('/register')
 
 router.route('/getuser')
     .post(userController.getUsers);
-
-router.route('/upload').post(uploadController.upload);
-router.route('/delete').post(uploadController.delete);
 
 router.route('/getAttendence').post(attendenceController.get);
 
