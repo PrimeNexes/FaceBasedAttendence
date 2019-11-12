@@ -12,7 +12,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const _l = require('lodash');
 const fs = require('fs');
-// Initialize the app
+const rimraf = require('rimraf');
+// Initialize the app;
 let app = express();
 
 
@@ -60,10 +61,10 @@ app.use(morgan('dev'));
 app.post('/delete', async (req, res) => {
     let className = req.body.className;
     let year = req.body.year;
-    await fs.unlink('./python/recogCache/'+year+'/'+className+'/', (err) => {
-        if (err) throw err;
-        res.json('successfully deleted /'+year+'/'+className+'/');
-      });
+    await rimraf('./python/recogCache/'+year+'/'+className, function (err) { 
+        if(err) throw err;
+        res.send("Deleted");
+     });
 });
 
 app.post('/upload-dataset', async (req, res) => {
@@ -104,7 +105,6 @@ app.post('/upload-dataset', async (req, res) => {
     }
 });
 app.post('/upload-recognise', async (req, res) => {
-    console.log(__dirname);
     try {
         if(!req.files) {
             res.send({
