@@ -1,7 +1,6 @@
 // @ts-check
 // contactController.js
 // Import contact model
-const Recognise = require('../model/recognise.model');
 let PythonShell = require('python-shell')
 // Handle index actions
 exports.recognise = function (req, res) {

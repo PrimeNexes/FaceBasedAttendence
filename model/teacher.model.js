@@ -13,7 +13,7 @@ var dataSchema = new mongoose.Schema({
             required: true
         },
     subject: {
-        type: String,
+        type: [String],
         required: true
     },
     registed_date: {
@@ -22,9 +22,9 @@ var dataSchema = new mongoose.Schema({
     }});
 
 // Export User model
-var User = module.exports = mongoose.model('User', dataSchema);
+var Teacher = module.exports = mongoose.model('Teacher', dataSchema);
 
 module.exports.get = async function (find) {
-    const data = await User.findOne(find);
+    const data = await Teacher.findOne(find);
     return data;
 }
