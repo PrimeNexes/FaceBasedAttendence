@@ -6,11 +6,8 @@ from embedding import emb
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
-from PIL import Image
 from matplotlib import pyplot
-from numpy import savez_compressed
-from numpy import asarray
-from mtcnn.mtcnn import MTCNN
+
 
 import sys
 n_classes=60
