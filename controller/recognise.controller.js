@@ -14,10 +14,12 @@ exports.recognise = function (req, res) {
     let options = {
       args: argument,
     };
+    console.log("Begin Recognition");
     PythonShell.PythonShell.run('python/recognizer.py',options,function (err, results) {
-        if (err) throw err;
-        res.json({results:results})
+        if (err) res.json(err);
+        res.json({results:results});
     });
+    console.log("Recognition Ended");
   })
 
 

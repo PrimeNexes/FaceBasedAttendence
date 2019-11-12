@@ -7,40 +7,38 @@ var dataSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        professor: {
+        teacher: {
             type: String,
             required: true
         },
         name: {
+            type: [String],
+            required: true
+        },
+        className: {
             type: String,
             required: true
         },
-    className: {
-        type: String,
-        required: true
-    },
-    attendence: {
-        type: Boolean,
-        required: true
-    },
-    year: {
-        type: Number,
-        required: true
-    },
-    timestamp: {
-        type: Date,
-        default: Date.now
-    }
+        attendence: {
+            type: [Boolean],
+            required: true
+        },
+        year: {
+            type: Number,
+            required: true
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now
+        }
 });
 
 // Export User model
 var Attendence = module.exports = mongoose.model('Attendence', dataSchema);
 
 module.exports.get = async function (find) {
-    console.log(find);
     const give = [];
-    give.push('none');
-    const data = await Attendence.find(find).sort({"uid":0});
+    const data = await Attendence.find(find).sort({"timestamp":0});
     data.forEach((snapshot)=>{
         give.push(snapshot.toJSON().name);
     })

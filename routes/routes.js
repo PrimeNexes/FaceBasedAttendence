@@ -15,6 +15,7 @@ var trainController = require('../controller/train.controller');
 var userController = require('../controller/user.controller');
 var uploadController = require('../controller/upload.controller');
 var attendenceController = require('../controller/attendence.controller');
+var teacherController = require('../controller/teacher.controller');
 // Contact routes
 
 router.route('/recognise')
@@ -31,11 +32,15 @@ router.route('/register')
 router.route('/getuser')
     .post(userController.getUsers);
 
-router.route('/upload').post(uploadController.upload)
-router.route('/delete').post(uploadController.delete)
+router.route('/upload').post(uploadController.upload);
+router.route('/delete').post(uploadController.delete);
 
-router.route('/getAttendence').post(attendenceController.get)
+router.route('/getAttendence').post(attendenceController.get);
 
-router.route('/putAttendence').post(attendenceController.put)
+router.route('/putAttendence').post(attendenceController.put);
+
+router.route('/registerTeacher').post(teacherController.register);
+
+router.route('/loginTeacher').post(teacherController.login);
 // Export API routes
 module.exports = router;

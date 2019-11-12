@@ -26,7 +26,7 @@ exports.register = function (req, res) {
             }
         else{
         res.json({
-            message: 'New User created!',
+            message: 'New Student added !',
             data: user
         });
     }

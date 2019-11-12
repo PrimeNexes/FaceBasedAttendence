@@ -11,13 +11,13 @@ exports.train= function (req, res) {
     let className = req.body.className;
 
     let argument = [year,className];
-    console.log(argument)
     let options = {
       args: argument,
     };
+    console.log("Begin Training");
     let pyshell =PythonShell.PythonShell.run('python/trainer.py',options,function (err, results) {
-        if (err) throw err;
-        res.json({results:results})
+        if (err) res.json(err);
+        res.json({results:results});
     });
-
+    console.log("Training Ended");
 };

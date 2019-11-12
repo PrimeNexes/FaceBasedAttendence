@@ -33,7 +33,7 @@ exports.put = function (req, res) {
             }
         else{
         res.json({
-            message: 'New User created!',
+            message: 'Attendence Record Added !',
             data: attendence
         });
     }
