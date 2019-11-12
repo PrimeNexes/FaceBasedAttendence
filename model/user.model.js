@@ -30,7 +30,8 @@ module.exports.get = async function (find) {
     give.push('none');
     const data = await User.find(find).sort({"uid":0});
     data.forEach((snapshot)=>{
-        give.push(snapshot.toJSON().name);
-    })
+        give.push(snapshot.toJSON().uid);
+    });
+    console.log(give);
     return give;//Display the comments returned by MongoDB, if any were found. Executes after the query is complete.
 }
