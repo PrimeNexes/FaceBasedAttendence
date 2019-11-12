@@ -10,8 +10,8 @@ let mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const morgan = require('morgan');
-const _ = require('lodash');
-var fs = require('fs');
+const _l = require('lodash');
+const fs = require('fs');
 // Initialize the app
 let app = express();
 
@@ -57,6 +57,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
+app.post('/delete', async (req, res) => {
+    let className = req.body.className;
+    let year = req.body.year;
+    await fs.unlink('./recogCache/'+year+'/'+className, (err) => {
+        if (err) {res.json(err);}else{
+        res.json('successfully deleted /'+year+'/'+className);}
+      });
+});
 
 app.post('/upload-dataset', async (req, res) => {
     try {
@@ -67,16 +75,15 @@ app.post('/upload-dataset', async (req, res) => {
             });
         } else {
             let data = []; 
-    
             //loop all files
-            _.forEach(_.keysIn(req.files.photos), (key) => {
-                let photo = req.files.photos[key];
+            _l.forEach(_l.keysIn(req.files['photos']), (key) => {
+                let photo = req.files['photos'][key];
                 let str =  photo.name.split('.');
                 const dir = './python/dataset/'+str[0]+'/'+str[1]+'/'+str[2]+'/'+str[3]+'.'+str[4];
 
                 //move photo to uploads directory
                 photo.mv(dir);
-
+                
                 //push file details
                 data.push({
                     name: photo.name,
@@ -97,6 +104,7 @@ app.post('/upload-dataset', async (req, res) => {
     }
 });
 app.post('/upload-recognise', async (req, res) => {
+    console.log(__dirname);
     try {
         if(!req.files) {
             res.send({
@@ -107,10 +115,10 @@ app.post('/upload-recognise', async (req, res) => {
             let data = []; 
     
             //loop all files
-            _.forEach(_.keysIn(req.files.photos), (key) => {
-                let photo = req.files.photos[key];
+            _l.forEach(_l.keysIn(req.files['photos']), (key) => {
+                let photo = req.files['photos'][key];
                 let str =  photo.name.split('.');
-                const dir = './python/recogCache/'+str[0]+'/'+str[1]+'/'+str[2]+'/'+str[3]+'.'+str[4];
+                let dir = './python/recogCache/'+str[0]+'/'+str[1]+'/'+str[2]+'.'+str[3];
 
                 //move photo to uploads directory
                 photo.mv(dir);
@@ -131,6 +139,7 @@ app.post('/upload-recognise', async (req, res) => {
             });
         }
     } catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 });
