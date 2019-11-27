@@ -15,6 +15,10 @@ var dataSchema = new mongoose.Schema({
             type: [String],
             required: true
         },
+        uid: {
+            type: [Number],
+            required: true
+        },
         className: {
             type: String,
             required: true
@@ -29,7 +33,7 @@ var dataSchema = new mongoose.Schema({
         },
         timestamp: {
             type: Date,
-            default: Date.now
+            default: new Date()
         }
 });
 
@@ -37,10 +41,6 @@ var dataSchema = new mongoose.Schema({
 var Attendence = module.exports = mongoose.model('Attendence', dataSchema);
 
 module.exports.get = async function (find) {
-    const give = [];
-    const data = await Attendence.find(find).sort({"timestamp":0});
-    data.forEach((snapshot)=>{
-        give.push(snapshot.toJSON().name);
-    })
-    return give;//Display the comments returned by MongoDB, if any were found. Executes after the query is complete.
+    const data = await Attendence.find(find).sort({timestamp: 1});
+    return data;//Display the comments returned by MongoDB, if any were found. Executes after the query is complete.
 }

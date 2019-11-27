@@ -1,0 +1,77 @@
+<html>
+    <body>
+	Upload
+		<form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/upload-recognise" method="post"> 
+		   <input type="file" name="photos" multiple/><br/><br/>  
+		   <input type="submit" value="Upload Image" name="submit"><br/><br/>  
+		   <span id="status"></span>  
+		</form>
+		Delete
+		<form action="http://localhost:8080/delete" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		recognise
+        <form action="http://localhost:8080/api/recognise" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Train
+		          <form action="http://localhost:8080/api/train" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Get Users
+		 <form action="http://localhost:8080/api/getuser" method="post">
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Register
+		  <form action="http://localhost:8080/api/register" method="post">
+			Name: <input type="text" name="name"><br>
+			Uid: <input type="text" name="uid"><br>
+            Class Name: <input type="text" name="className"><br>
+            Year: <input type="text" name="year"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Register Teacher
+		  <form action="http://localhost:8080/api/registerTeacher" method="post">
+		  	Name: <input type="text" name="name"><br>
+			subject <input type="text" name="subject"><br>
+			Name: <input type="text" name="username"><br>
+			Password <input type="text" name="password"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  LoginTeacher
+		  <form action="http://localhost:8080/api/loginTeacher" method="post">
+			Name: <input type="text" name="username"><br>
+			Password <input type="text" name="password"><br>
+            <input type="submit" value="Submit">
+          </form>
+		  Attendence
+		  	<form action="http://localhost:8080/api/putAttendence" method="post">
+			Subject: <input type="text" name="subject"><br>
+			Professor: <input type="text" name="teacher"><br>
+			Year: <input type="text" name="year"><br>
+            Class Name: <input type="text" name="className"><br>
+			Name: <input type="text" name="name"><br>
+			Attendence: <input type="text" name="attendence"><br>
+            
+            <input type="submit" value="Submit">
+          </form>
+		  	Get  Attendence
+		  	<form action="http://localhost:8080/api/getAttendence" method="post">
+			Subject: <input type="text" name="subject"><br>
+			Professor: <input type="text" name="teacher"><br>
+			Year: <input type="text" name="year"><br>
+            Class Name: <input type="text" name="className"><br>
+			TimeStamp: <input type="text" name="timestamp"><br>
+            
+            <input type="submit" value="Submit">
+          </form>
+    </body>
+</html>

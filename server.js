@@ -13,6 +13,7 @@ const morgan = require('morgan');
 const _l = require('lodash');
 const fs = require('fs');
 const rimraf = require('rimraf');
+
 // Initialize the app;
 let app = express();
 
@@ -143,6 +144,8 @@ app.post('/upload-recognise', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+
 // Launch app to listen to specified port
 app.listen(port, function () {
     console.log("Running RestHub on port " + port);
